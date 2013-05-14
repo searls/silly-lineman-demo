@@ -3,6 +3,7 @@ class window.SignUpView extends Backbone.View
 
   events:
     "submit form": "createAccount"
+    "change [name='login']": "checkAvailability"
 
   render: ->
     @$el.html(JST[@template]())
@@ -10,6 +11,11 @@ class window.SignUpView extends Backbone.View
   createAccount: (e) ->
     e.preventDefault()
     $.post('/accounts', name: @$('[name="login"]').val())
+
+  checkAvailability: ->
+    $name = @$('[name="login"]')
+    $.get "/account_availability/#{$name.val()}", (response) ->
+      $name.toggleClass('invalid', !response.available)
 
 $ ->
   new SignUpView(el: $('.container')).render()

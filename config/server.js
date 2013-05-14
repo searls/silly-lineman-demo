@@ -14,8 +14,9 @@
 
 module.exports = {
   drawRoutes: function(app) {
-    // app.get('/api/greeting/:message', function(req, res){
-    //   res.json({ message: "OK, "+req.params.message });
-    // });
+    app.get('/account_availability/:name', function(req, res){
+      isAvailable = req.params.name !== "Todd";
+      res.send({available: isAvailable});
+    });
   }
 };
